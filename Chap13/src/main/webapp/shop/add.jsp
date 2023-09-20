@@ -97,8 +97,8 @@
 	</div>
 	
 	
-	<jsp:include page="footer.jsp" />
-	<jsp:include page="script.jsp" />
+	<jsp:include page="../layout/footer.jsp" />
+	<jsp:include page="../layout/script.jsp" />
 </body>
 </html>
 

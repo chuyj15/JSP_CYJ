@@ -11,12 +11,20 @@
 	<!-- bootstrap lib -->
 		<jsp:include page="/layout/link.jsp" />
 </head>
-<body>  
+<body> 
+<%	
+	String productId = request.getParameter("id");
+	ProductRepository productDAO = new ProductRepository(); 
+	Product product = new Product();
+	if ( productId != null){
+		product = productDAO.getProductById(productId);
+	}
+%> 
 	<jsp:include page="../layout/header.jsp" />
 	<div class="px-4 py-5 my-5 text-center">
-		<h1 class="display-5 fw-bold text-body-emphasis">상품 등록</h1>
+		<h1 class="display-5 fw-bold text-body-emphasis">상품 수정</h1>
 		<div class="col-lg-6 mx-auto">
-			<p class="lead mb-4">Shop 쇼핑몰 입니다.</p>
+			<p class="lead mb-4">상품 편집 화면입니다~</p>
 		</div>
 	</div>
 	
@@ -24,7 +32,8 @@
 	<!-- 상품 등록 입력 화면 -->
 	<div class="container">
 		<!-- [NEW] enctype 추가 -->
-		<form name="product" action="./add_pro.jsp" onsubmit="return checkProduct()" method="post" enctype="multipart/form-data">
+		<!-- onsubmit="return checkProduct()" : 유효성 검사임 -->
+		<form name="product" action="./update_pro.jsp" onsubmit="return checkProduct()" method="post" enctype="multipart/form-data">
 			
 			<!-- [NEW] 파일 입력 추가 -->
 			<div class="input-group mb-3 row">
@@ -34,34 +43,34 @@
 		
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">상품 코드</label>
-				<input type="text" class="form-control col-md-10" name="productId">
+				<!-- disable 걸면 값이 안넘어가짐요 ㅠㅠ안됨요 ㅠㅠㅠㅠ -->
+				<input type="text" class="form-control col-md-10" name="productId" value="<%= product.getProductId()%>" readonly>
 			</div>
 			
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">상품명</label>
-				<input type="text" class="form-control col-md-10" name="name">
+				<input type="text" class="form-control col-md-10" name="name" value="<%= product.getName()%>">
 			</div>
 			
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">가격</label>
-				<input type="number" class="form-control col-md-10" name="unitPrice">
+				<input type="number" class="form-control col-md-10" name="unitPrice" value="<%= product.getUnitPrice()%>">
 			</div>
 			<div class="input-group mb-3 row">
 				<label class="input-group-text w-100" id="">상세 정보</label>
-				<textarea class="form-control" name="description" 
-						  style="height: 200px !important;"></textarea>
+				<textarea class="form-control" name="description"  style="height: 200px !important;" ><%= product.getDescription()%></textarea>
 			</div>
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">제조사</label>
-				<input type="text" class="form-control col-md-10" name="manufacturer">
+				<input type="text" class="form-control col-md-10" name="manufacturer" value="<%= product.getManufacturer()%>">
 			</div>
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">분류</label>
-				<input type="text" class="form-control col-md-10" name="category">
+				<input type="text" class="form-control col-md-10" name="category" value="<%= product.getCategory()%>">
 			</div>
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">재고 수</label>
-				<input type="number" class="form-control col-md-10" name="unitsInStock">
+				<input type="number" class="form-control col-md-10" name="unitsInStock" value="<%= product.getUnitsInStock()%>">
 			</div>
 			<div class="input-group mb-3 row">
 				<div class="col-md-2 p-0">
@@ -89,7 +98,7 @@
 			
 			<div class="d-flex justify-content-between mt-5 mb-5">
 				<a href="./products.jsp" class="btn btn-lg btn-secondary">목록</a>
-				<input type="submit" class="btn btn-lg btn-primary" value="등록" />
+				<input type="submit" class="btn btn-lg btn-success" value="수정" />
 			</div>
 		
 		</form> 
@@ -97,8 +106,8 @@
 	</div>
 	
 	
-	<jsp:include page="footer.jsp" />
-	<jsp:include page="script.jsp" />
+	<jsp:include page="../layout/footer.jsp" />
+	<jsp:include page="../layout/script.jsp" />
 </body>
 </html>
 
